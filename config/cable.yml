@@ -1,14 +1,18 @@
 development:
-  adapter: redis
-  url: redis://<%= ENV.fetch("REDIS_HOST") %>:<%= ENV.fetch("REDIS_PORT") %>/1
-  channel_prefix: myapp_development
+  adapter: solid_cable
+  connects_to:
+    database:
+      writing: cable
+  polling_interval: 0.1.seconds
+  message_retention: 1.day
 
 test:
-  adapter: async
+  adapter: test
 
 production:
-  adapter: redis
-  url: redis://<%= ENV.fetch("REDIS_HOST") %>:<%= ENV.fetch("REDIS_PORT") %>/1
-  channel_prefix: myapp_production
-  ssl_params:
-    verify_mode: <%= OpenSSL::SSL::VERIFY_NONE %>
+  adapter: solid_cable
+  connects_to:
+    database:
+      writing: cable
+  polling_interval: 0.1.seconds
+  message_retention: 1.day

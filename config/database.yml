@@ -7,13 +7,24 @@ default: &default
   password: <%= ENV['POSTGRES_PASSWORD'] %>
 
 development:
-  <<: *default
-  database: quote_editor_development
+  primary:
+    <<: *default
+    database: quote_editor_development
+  cache:
+    <<: *default
+    database: quote_editor_development_cache
+    migrations_paths: db/cache_migrate
+  cable:
+    <<: *default
+    database: quote_editor_development_cable
+    migrations_paths: db/cable_migrate
 
 test:
-  <<: *default
-  database: quote_editor_test
+  primary:
+    <<: *default
+    database: quote_editor_test
 
 production:
-  <<: *default
-  database: 'quote_editor'
+  primary:
+    <<: *default
+    database: 'quote_editor'
